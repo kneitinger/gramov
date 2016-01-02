@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+import telebot
+from markoff import Markoff
+import argparse
+
+def parseArgs():
+    parser = argparse.ArgumentParser(description=
+        'A telegram bot that listens to ')
+    parser.prog = 'tell-off'
+    parser.add_argument('--token','-t',
+            required=True, type=str, nargs=1, help='Telgram API Token')
+    parser.add_argument('--file','-f',
+            required=False, type=str, nargs='?', default=None,
+            help='Recieved phrases backup file')
+    parser.add_argument('--verbose','-v',
+            help='print events to stdout', action='store_true')
+    args = parser.parse_args()
+    return args
+
+
+args = parseArgs() 
+
+bot = telebot.TeleBot(args.token[0])
+markoff = Markoff(args.file)
+
+@bot.message_handler(commands=['speak'])
+def send_sentence(message):
+    bot.send_message(message.chat.id, markoff.gen_sentence())
+
+@bot.message_handler(func=lambda message: True)
+def learn_sentence(message):
+    markoff.add_vocab(message.text)
+
+bot.polling()
