@@ -9,7 +9,7 @@ config = {
     'author': 'Kyle J. Kneitinger',
     'url': 'https://github.com/kneitinger/gramov',
     'author_email': 'kneit@pdx.edu',
-    'version': '0.1',
+    'version': '0.1.2',
     'install_requires': ['pyTelegramBotAPI','markoff'],
     'scripts': ['bin/gramov'],
     'name': 'gramov',

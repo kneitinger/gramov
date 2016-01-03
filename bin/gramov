@@ -25,10 +25,15 @@ markoff = Markoff(args.file)
 
 @bot.message_handler(commands=['speak'])
 def send_sentence(message):
-    bot.send_message(message.chat.id, markoff.gen_sentence())
+    msg = markoff.gen_sentence()
+    if args.verbose:
+        print('Sending: ' + msg)
+    bot.send_message(message.chat.id, msg)
 
 @bot.message_handler(func=lambda message: True)
 def learn_sentence(message):
+    if args.verbose:
+        print('Learning: ' + message.text)
     markoff.add_vocab(message.text)
 
 bot.polling()
