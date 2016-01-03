@@ -16,7 +16,7 @@ def parseArgs():
     parser.add_argument('--verbose','-v',
             help='print events to stdout', action='store_true')
     parser.add_argument('--max-len','-l',
-            required=False, nargs=1,
+            required=False, type=int, nargs='?',
             help='Maximum length of message to process, in chars')
     args = parser.parse_args()
     return args
